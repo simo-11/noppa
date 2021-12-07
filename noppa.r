@@ -1,19 +1,14 @@
 throws<-34
 expectedSixs<-3
-simulations<-10000000
+simulations<-100000000
 got<-0
 for(i in 1:simulations){
-  n_six<-0
   v<-runif(throws,0,6)
-  for(vi in v){
-    if(vi>5){
-      n_six<-n_six+1
-      if(n_six==expectedSixs){
-        got<-got+1
-        break  
-      }
-    }
+  if(length(v[v>5])>=3){
+    got<-got+1
+  }
+  if(i%%100000==0){
+    cat(sprintf("\rSimulointeja % 8d: todennäköisyys %.4f %%",
+              i,got/i*100))
   }
 }
-cat(sprintf("Simulointeja %d: todennäköisyys %.3f %%",
-            simulations,got/simulations*100))
